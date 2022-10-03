@@ -55,6 +55,12 @@ elif [[ -z $Token ]]; then
     die "Missing parameter --Token"
 fi
 
+############## Install Dependencies required for for .NET Core 3.1 ##################################
+
+curl -fkSL -o installdependencies.sh https://raw.githubusercontent.com/Katef-Cloud/Public/main/AzureDevops-Environment/installdependencies.sh
+sudo chmod a+x installdependencies.sh
+sudo ./installdependencies.sh
+
 
 ############## Install Agent ########################################
 
