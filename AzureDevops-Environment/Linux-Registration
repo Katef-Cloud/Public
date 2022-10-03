@@ -10,7 +10,7 @@ function usage {
     echo "usage: $programname --OrganizationUrl string --Project string --Environment string --Token string "
     echo ""
     echo "  --OrganizationUrl string   URL OF Organization"
-    echo "                             (example: https://dev.azure.com/Inovasys/)"
+    echo "                             (example: https://dev.azure.com/Organization/)"
     echo "  --Project string           Project name"
     echo "                             (example: 'Lab')"
     echo "  --Environment string       Environment name"
