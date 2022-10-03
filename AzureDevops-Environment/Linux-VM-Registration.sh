@@ -5,7 +5,7 @@
 programname=$0
 function usage {
     echo ""
-    echo "Deploys an ECR image to Atlas using GitOps and ArgoCD."
+    echo "Register Linux VM to Azure Devops Environment."
     echo ""
     echo "usage: $programname --OrganizationUrl string --Project string --Environment string --Token string "
     echo ""
