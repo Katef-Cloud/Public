@@ -65,7 +65,7 @@ tar -zxvf vstsagent.tar.gz;
 
 if [ -x "$(command -v systemctl)" ]; 
 then 
-    ./config.sh --environment \
+    ./config.sh --unattended --environment \
     --environmentname $Environment \
     --acceptteeeula \
     --agent $HOSTNAME \
@@ -78,7 +78,7 @@ then
     sudo ./svc.sh install;
     sudo ./svc.sh start;
 else 
-    ./config.sh --environment \
+    ./config.sh --unattended --environment \
     --environmentname $Environment \
     --acceptteeeula \
     --agent $HOSTNAME \
