@@ -64,6 +64,10 @@ sudo ./installdependencies.sh
 
 ############## Install Agent ########################################
 
+####### The script will run using admin user rather than root as per prerequisites to run script successfully
+
+sudo -i -u inadmin bash << EOF
+
 mkdir azagent;
 cd azagent;
 curl -fkSL -o vstsagent.tar.gz https://vstsagentpackage.azureedge.net/agent/2.210.1/vsts-agent-linux-x64-2.210.1.tar.gz;
@@ -95,3 +99,5 @@ else
     --token $Token;
     ./run.sh; 
 fi
+
+EOF
