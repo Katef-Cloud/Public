@@ -7,7 +7,7 @@ function usage {
     echo ""
     echo "Register Linux VM to Azure Devops Environment."
     echo ""
-    echo "usage: $programname --OrganizationUrl string --Project string --Environment string --Token string "
+    echo "usage: $programname --OrganizationUrl string --Project string --Environment string --Token string --VM_OS_Admin string"
     echo ""
     echo "  --OrganizationUrl string   URL OF Organization"
     echo "                             (example: https://dev.azure.com/Organization/)"
@@ -17,6 +17,7 @@ function usage {
     echo "                             (example: 'Terraform')"
     echo "  --Token string             Personal Access Token"
     echo "                             (example: y6msazjdb2hncvuk2lb4j22wj4csoejdx2bvgl7nnoopolertdvo3etpa)"
+    echo "  --VM_OS_Admin string       Admin Username configured on Virtual Machine (Don't Use root)"
     echo ""
 }
 
@@ -53,6 +54,12 @@ elif [[ -z $Environment ]]; then
 elif [[ -z $Token ]]; then
     usage
     die "Missing parameter --Token"
+elif [[ $VM_OS_Admin == "root" ]]; then
+    usage
+    die "Don't use root. Please use any other Account with admin privilege"
+elif [[ -z $VM_OS_Admin ]]; then
+    usage
+    die "Missing parameter --VM_OS_Admin"
 fi
 
 ############## Install Dependencies required for for .NET Core 3.1 ##################################
@@ -66,7 +73,7 @@ sudo ./installdependencies.sh
 
 ####### The script will run using admin user rather than root as per prerequisites to run script successfully
 
-sudo -i -u inadmin bash << EOF
+sudo -i -u $VM_OS_Admin bash << EOF
 
 mkdir azagent;
 cd azagent;
