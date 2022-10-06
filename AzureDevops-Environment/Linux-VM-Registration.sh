@@ -54,12 +54,12 @@ elif [[ -z $Environment ]]; then
 elif [[ -z $Token ]]; then
     usage
     die "Missing parameter --Token"
-elif [[ $VM_OS_Admin == "root" ]]; then
-    usage
-    die "Don't use root. Please use any other Account with admin privilege"
 elif [[ -z $VM_OS_Admin ]]; then
     usage
     die "Missing parameter --VM_OS_Admin"
+elif [[ $VM_OS_Admin == "root" ]]; then
+    usage
+    die "Don't use root. Please use any other Account with admin privilege"
 fi
 
 ############## Install Dependencies required for for .NET Core 3.1 ##################################
