@@ -7,13 +7,11 @@ function usage {
     echo ""
     echo "Register Linux VM to Azure Devops Environment."
     echo ""
-    echo "usage: $programname --OrganizationUrl string --Project string --Environment string --Token string --VM_OS_Admin string"
+    echo "usage: $programname --OrganizationUrl string --pool string --Token string --VM_OS_Admin string"
     echo ""
     echo "  --OrganizationUrl string   URL OF Organization"
     echo "                             (example: https://dev.azure.com/Organization/)"
-    echo "  --Project string           Project name"
-    echo "                             (example: 'Lab')"
-    echo "  --Environment string       Environment name"
+    echo "  --pool string              Agent Pool name  (Hint: Need to be created first)"
     echo "                             (example: 'Terraform')"
     echo "  --Token string             Personal Access Token"
     echo "                             (example: y6msazjdb2hncvuk2lb4j22wj4csoejdx2bvgl7nnoopolertdvo3etpa)"
@@ -45,12 +43,9 @@ done
 if [[ -z $OrganizationUrl ]]; then
     usage
     die "Missing parameter --OrganizationUrl"
-elif [[ -z $Project ]]; then
+elif [[ -z $pool ]]; then
     usage
-    die "Missing parameter --Project"
-elif [[ -z $Environment ]]; then
-    usage
-    die "Missing parameter --Environment"
+    die "Missing parameter --pool"
 elif [[ -z $Token ]]; then
     usage
     die "Missing parameter --Token"
@@ -59,7 +54,7 @@ elif [[ -z $VM_OS_Admin ]]; then
     die "Missing parameter --VM_OS_Admin"
 elif [[ $VM_OS_Admin == "root" ]]; then
     usage
-    die "Don't use root. Please use any other Account with admin privilege"
+    die "Don't use root. Please use any other Account with an admin privilege"
 fi
 
 ############## Install Dependencies required for for .NET Core 3.1 ##################################
@@ -82,28 +77,26 @@ tar -zxvf vstsagent.tar.gz;
 
 if [ -x "$(command -v systemctl)" ]; 
 then 
-    ./config.sh --unattended --environment \
-    --environmentname $Environment \
+    ./config.sh --unattended --replace \
     --acceptteeeula \
+    --pool $pool \
     --agent $HOSTNAME \
     --url $OrganizationUrl \
     --work _work \
-    --projectname $Project \
     --auth PAT \
     --token $Token \
-    --runasservice; 
-    sudo ./svc.sh install;
+    --runasservice &&
+    sudo ./svc.sh install &&
     sudo ./svc.sh start;
 else 
-    ./config.sh --unattended --environment \
-    --environmentname $Environment \
+    ./config.sh --unattended --replace \
     --acceptteeeula \
+    --pool $pool \
     --agent $HOSTNAME \
     --url $OrganizationUrl \
     --work _work \
-    --projectname $Project \
     --auth PAT \
-    --token $Token;
+    --token $Token &&
     ./run.sh; 
 fi
 
