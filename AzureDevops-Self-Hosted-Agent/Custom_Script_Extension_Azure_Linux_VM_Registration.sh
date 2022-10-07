@@ -1,5 +1,5 @@
-customScriptUri="https://raw.githubusercontent.com/Katef-Cloud/Public/main/AzureDevops-Environment/Linux-VM-Registration.sh"
-customScriptSettings='{"fileUris": ["'"$customScriptUri"'"],"commandToExecute": "./Linux-VM-Registration.sh --OrganizationUrl $(System.TeamFoundationCollectionUri) --Project $(System.TeamProject) --Environment $(environmentName) --Token $(token) --VM_OS_Admin $(adminName)"}'
+customScriptUri="https://raw.githubusercontent.com/Katef-Cloud/Public/main/AzureDevops-Self-Hosted-Agent/Linux-VM-Install_Self_hosted_Agent.sh"
+customScriptSettings='{"fileUris": ["'"$customScriptUri"'"],"commandToExecute": "./Linux-VM-Install_Self_hosted_Agent.sh --OrganizationUrl $(System.TeamFoundationCollectionUri) --pool $(poolname) --Token $(token) --VM_OS_Admin $(adminName)"}'
 
 echo $customScriptSettings > customScriptSettings.json
 cat customScriptSettings.json
